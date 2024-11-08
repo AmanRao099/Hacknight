@@ -1,0 +1,72 @@
+[
+    {
+        "id": 1,
+        "name": "Times Square",
+        "lat": 40.7580,
+        "lng": -73.9855,
+        "trafficLevel": 85
+    },
+    {
+        "id": 2,
+        "name": "Central Park",
+        "lat": 40.7851,
+        "lng": -73.9683,
+        "trafficLevel": 70
+    },
+    {
+        "id": 3,
+        "name": "Brooklyn Bridge",
+        "lat": 40.7061,
+        "lng": -73.9969,
+        "trafficLevel": 75
+    },
+    {
+        "id": 4,
+        "name": "Fifth Avenue",
+        "lat": 40.7750,
+        "lng": -73.9654,
+        "trafficLevel": 80
+    },
+    {
+        "id": 5,
+        "name": "Wall Street",
+        "lat": 40.7074,
+        "lng": -74.0113,
+        "trafficLevel": 60
+    },
+    {
+        "id": 6,
+        "name": "Grand Central Terminal",
+        "lat": 40.7527,
+        "lng": -73.9772,
+        "trafficLevel": 65
+    },
+    {
+        "id": 7,
+        "name": "Madison Square Garden",
+        "lat": 40.7505,
+        "lng": -73.9934,
+        "trafficLevel": 78
+    },
+    {
+        "id": 8,
+        "name": "Soho",
+        "lat": 40.7233,
+        "lng": -73.9994,
+        "trafficLevel": 68
+    },
+    {
+        "id": 9,
+        "name": "Chinatown",
+        "lat": 40.7175,
+        "lng": -73.9980,
+        "trafficLevel": 72
+    },
+    {
+        "id": 10,
+        "name": "Times Square Subway Station",
+        "lat": 40.7550,
+        "lng": -73.9875,
+        "trafficLevel": 90
+    }
+]

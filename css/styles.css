@@ -1,0 +1,33 @@
+/* styles.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+  }
+  
+  #map {
+    height: 70%;
+    width: 100%;
+  }
+  
+  #traffic-info {
+    padding: 20px;
+    background-color: #f4f4f4;
+    font-size: 16px;
+    height: 30%;
+    overflow-y: scroll;
+  }
+  
+  h2 {
+    margin-top: 0;
+  }
+  
+  #traffic-details {
+    margin-top: 10px;
+  }
+  
+  .traffic-info {
+    margin-bottom: 10px;
+  }
+  

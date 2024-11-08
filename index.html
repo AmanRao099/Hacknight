@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Monitoring - Smart City Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome for icons -->
+    <style>
+        /* Basic styling for layout */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2b3a4b, #1c2b35); /* Dark blue gradient */
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #1a2a34;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            border-bottom: 4px solid #4d5f6c;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            font-weight: 400;
+        }
+        header .back-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.2rem;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: color 0.3s;
+        }
+        header .back-link:hover {
+            color: #1e90ff;
+        }
+        header .back-link i {
+            margin-right: 8px;
+            font-size: 1.4rem;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            gap: 2rem;
+        }
+        #map {
+            width: 100%;
+            height: 400px; /* Ensure map container has height */
+        }
+        #trafficChart {
+            width: 100%;
+            height: 250px;  /* Set fixed height */
+        }
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #1a2a34;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .footer p {
+            font-size: 1rem;
+            margin: 0;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Smart City Dashboard</h1>
+    <p>Traffic Monitoring</p>
+    <!-- Back to home link with arrow icon -->
+    <a href="home.html" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+</header>
+
+<div class="container">
+    <!-- Map Section -->
+    <div id="map"></div>
+
+    <!-- Traffic Chart Section -->
+    <div class="section" id="traffic-monitoring">
+        <h2>Traffic Density Across Locations</h2>
+        <canvas id="trafficChart"></canvas>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 Smart City Solutions. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Google Maps API -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSWvAWBuJG2NUnXc-sZdcaKSV8AtRF-yw&callback=initMap" async defer></script>
+
+<script>
+// traffic.js (formerly app.js)
+
+let map;
+let markers = [];
+let trafficData = []; // To store the traffic data
+let trafficChart; // To store the reference to the chart
+let infoWindows = []; // Store info windows to keep them updated
+
+// Initialize the map and load traffic data
+function initMap() {
+    // Center the map around New York City (latitude 40.7128, longitude -74.0060)
+    map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: { lat: 40.7128, lng: -74.0060 }
+    });
+
+    // Fetch traffic data from the JSON file
+    fetchTrafficData()
+        .then(data => {
+            trafficData = data; // Store the fetched traffic data
+
+            // Loop through all locations and add a marker for each
+            trafficData.forEach(location => {
+                const marker = new google.maps.Marker({
+                    position: { lat: location.lat, lng: location.lng },
+                    map: map,
+                    title: location.name
+                });
+
+                // Store the marker in the markers array
+                markers.push(marker);
+
+                // Create info window
+                const infowindow = new google.maps.InfoWindow({
+                    content: `<div><strong>${location.name}</strong><br>Traffic Level: ${location.trafficLevel}%</div>`
+                });
+
+                // Store the infowindow for later updating
+                infoWindows.push(infowindow);
+
+                // Add an event listener to open the info window on marker click
+                marker.addListener('click', () => {
+                    infowindow.open(map, marker);
+                });
+            });
+
+            // Create the traffic bar chart
+            createTrafficChart();
+
+            // Start the dynamic traffic simulation
+            startDynamicTrafficSimulation();
+        })
+        .catch(error => console.error('Error loading traffic data:', error));
+}
+
+// Function to fetch traffic data from the JSON file
+function fetchTrafficData() {
+    return fetch('data/traffic-data.json')  // Ensure path is correct for your data file
+        .then(response => response.json())
+        .catch(error => {
+            console.error("Error fetching traffic data:", error);
+            return [];
+        });
+}
+
+// Function to create the bar chart for traffic data
+function createTrafficChart() {
+    const ctx = document.getElementById('trafficChart').getContext('2d');
+    trafficChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: trafficData.map(location => location.name),
+            datasets: [{
+                label: 'Traffic Level (%)',
+                data: trafficData.map(location => location.trafficLevel),
+                backgroundColor: 'rgba(0, 123, 255, 0.5)', // Blue color for bars
+                borderColor: 'rgba(0, 123, 255, 1)', // Border color for bars
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true, // Keep the aspect ratio constant (default)
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    title: {
+                        display: true,
+                        text: 'Traffic Level (%)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Function to simulate dynamic traffic changes
+function startDynamicTrafficSimulation() {
+    setInterval(() => {
+        trafficData.forEach((location, index) => {
+            // Simulate random traffic level changes between -10% and +10%
+            let randomChange = Math.floor(Math.random() * 21) - 10;
+            location.trafficLevel = Math.max(0, Math.min(100, location.trafficLevel + randomChange));
+
+            // Update the info window content with the new traffic level
+            infoWindows[index].setContent(`<div><strong>${location.name}</strong><br>Traffic Level: ${location.trafficLevel}%</div>`);
+
+            // Update the chart with the new traffic levels
+            trafficChart.data.datasets[0].data = trafficData.map(location => location.trafficLevel);
+            trafficChart.update();  // Refresh chart with new data without resizing
+        });
+    }, 5000); // Update every 5 seconds
+}
+</script>
+
+</body>
+</html>
