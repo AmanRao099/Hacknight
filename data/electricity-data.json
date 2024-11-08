@@ -1,0 +1,12 @@
+[
+    { "time": 1, "consumption": 12 },
+    { "time": 2, "consumption": 15 },
+    { "time": 3, "consumption": 18 },
+    { "time": 4, "consumption": 20 },
+    { "time": 5, "consumption": 22 },
+    { "time": 6, "consumption": 19 },
+    { "time": 7, "consumption": 17 },
+    { "time": 8, "consumption": 16 },
+    { "time": 9, "consumption": 14 },
+    { "time": 10, "consumption": 13 }
+]

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electricity Consumption - Smart City Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Dark mode theme */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('data/bg.jpg') no-repeat center center fixed; /* Set background image */
+            background-size: cover; /* Make the background cover the entire screen */
+            color: #e0e0e0; /* Light gray text */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header styling */
+        header {
+            background-color: rgba(31, 31, 31, 0.8); /* Darker header with transparency */
+            color: #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for elevation */
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        header .back-link {
+            color: #bbb;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        header .back-link:hover {
+            color: #66c0f4; /* Light blue hover effect */
+        }
+
+        /* Main content container */
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            gap: 2rem;
+        }
+
+        /* Card container styling */
+        .card {
+            background-color: rgba(31, 31, 31, 0.8); /* Semi-transparent background for card */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Card shadow */
+            overflow: hidden;
+            width: 140%;  /* Increased width by 70% */
+            max-width: 1020px;  /* Increased max-width */
+            margin: 0 auto; /* Center the card horizontally */
+            transition: transform 0.3s ease-in-out; /* Smooth hover transition */
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+        }
+
+        .card-header {
+            padding: 1rem;
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            background-color: #333;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;  /* Increased height for the chart container */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+        }
+
+        canvas {
+            border-radius: 8px;
+            width: 100%;
+            height: 100% !important; /* Ensure the canvas takes up the container space */
+        }
+
+        /* Footer styling */
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(31, 31, 31, 0.8);
+            color: #bbb;
+            border-top: 1px solid #333; /* Subtle line */
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Responsive design for smaller screens */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            header .back-link {
+                font-size: 1rem;
+            }
+
+            .card {
+                width: 100%;  /* Full width on small screens */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="home.html" class="back-link">
+        <i class="fas fa-arrow-left"></i> 
+    </a>
+    <h1>SMARTCITY</h1>
+</header>
+
+<div class="container">
+    <!-- Electricity Consumption Card Section -->
+    <div class="card">
+        <div class="card-header">
+            <h2>Electricity Consumption (kWh) Over Time</h2>
+        </div>
+        <div class="chart-container">
+            <canvas id="electricityChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2024 Smart City Solutions. All rights reserved.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Chart.js Configuration for real-time electricity consumption chart
+    const ctx = document.getElementById('electricityChart').getContext('2d');
+    const electricityChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Electricity Consumption (kWh)',
+                data: [],
+                borderColor: 'rgb(75, 192, 192)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,  // Allow manual control of aspect ratio
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Time (seconds)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Consumption (kWh)'
+                    },
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Function to fetch and load data from electricity-data.json
+    async function fetchData() {
+        try {
+            const response = await fetch('data/electricity-data.json');
+            const data = await response.json();
+
+            // Process the fetched data and update the chart
+            const timeLabels = data.map(entry => entry.time);  // Extract time data
+            const consumptionData = data.map(entry => entry.consumption);  // Extract consumption data
+
+            // Update chart with fetched data
+            electricityChart.data.labels = timeLabels;
+            electricityChart.data.datasets[0].data = consumptionData;
+            electricityChart.update();
+
+            // Optional: Update the last updated time
+            const lastUpdated = new Date().toLocaleTimeString();
+            console.log(`Last updated: ${lastUpdated}`);
+        } catch (error) {
+            console.error('Error fetching the data:', error);
+        }
+    }
+
+    // Initial fetch of data
+    fetchData();
+
+    // Set an interval to periodically fetch new data (e.g., every 5 seconds)
+    setInterval(() => {
+        fetchData();  // Fetch new data every 5 seconds
+    }, 5000);
+
+</script>
+
+</body>
+</html>
