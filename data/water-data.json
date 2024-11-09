@@ -1,8 +1,22 @@
 [
-    { "time": "08:00 AM", "consumption": 1000 },
-    { "time": "12:00 PM", "consumption": 1200 },
-    { "time": "06:00 PM", "consumption": 1100 },
-    { "time": "08:00 AM", "consumption": 400 },
-    { "time": "12:00 PM", "consumption": 500 },
-    { "time": "06:00 PM", "consumption": 450 }
+    { "time": 0, "consumption": 20 },
+    { "time": 5, "consumption": 35 },
+    { "time": 10, "consumption": 50 },
+    { "time": 15, "consumption": 45 },
+    { "time": 20, "consumption": 60 },
+    { "time": 25, "consumption": 70 },
+    { "time": 30, "consumption": 65 },
+    { "time": 35, "consumption": 80 },
+    { "time": 40, "consumption": 90 },
+    { "time": 45, "consumption": 85 },
+    { "time": 50, "consumption": 100 },
+    { "time": 55, "consumption": 110 },
+    { "time": 60, "consumption": 105 },
+    { "time": 65, "consumption": 120 },
+    { "time": 70, "consumption": 130 },
+    { "time": 75, "consumption": 125 },
+    { "time": 80, "consumption": 140 },
+    { "time": 85, "consumption": 150 },
+    { "time": 90, "consumption": 145 },
+    { "time": 95, "consumption": 160 }
 ]
