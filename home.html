@@ -214,7 +214,7 @@
         <div class="icon"><i class="fas fa-tint"></i></div>
         <h2>Water Consumption</h2>
         <div class="content">
-            <p>Water consumption data will appear here.</p>
+            <p id="totalWater">Loading...</p>
         </div>
     </a>
 
@@ -223,7 +223,7 @@
         <div class="icon"><i class="fas fa-trash"></i></div>
         <h2>Waste Management</h2>
         <div class="content">
-            <p>Waste management data will appear here.</p>
+            <p id="totalWaste">Loading...</p>
         </div>
     </a>
 </div>
@@ -337,12 +337,33 @@ fetchTrafficData()
     })
     .catch(error => console.error('Error loading traffic data:', error));
 
-fetchElectricityData()
-    .then(data => {
-        electricityData = data;
-        updateElectricityPercentage();
-    })
-    .catch(error => console.error('Error loading electricity data:', error));
+    fetchElectricityData()
+        .then(data => {
+            electricityData = data;
+            updateElectricityPercentage();
+        })
+        .catch(error => console.error('Error loading electricity data:', error));
+
+    function fetchTotalWaterData() {
+    return fetch('data/water-data.json')
+        .then(response => response.json())
+        .then(data => {
+            const totalWater = data.reduce((sum, entry) => sum + entry.consumption, 0);
+            document.getElementById('totalWater').textContent = `Total Water: ${totalWater} Liters`;
+        })
+        .catch(error => console.error('Error loading water data:', error));
+    }
+    function fetchTotalWasteData() {
+    return fetch('data/waste-data.json')
+        .then(response => response.json())
+        .then(data => {
+            const totalWaste = data.reduce((sum, entry) => sum + entry.wasteAmount, 0);
+            document.getElementById('totalWaste').textContent = `Total Waste: ${totalWaste} kg`;
+        })
+        .catch(error => console.error('Error loading waste data:', error));
+}
+    fetchTotalWaterData();
+    fetchTotalWasteData();
 </script>
 
 </body>
