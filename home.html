@@ -12,35 +12,52 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: #181818; /* Dark background */
-            color: #e0e0e0; /* Light text */
+            background: url('data/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #e0e0e0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             justify-content: space-between;
         }
+
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
         header {
-            background-color: #1e1e1e;
+            background-color: rgba(31, 31, 31, 0.8);
             color: #e0e0e0;
             display: flex;
-            justify-content: space-between; /* Align logo and nav links */
+            justify-content: space-between;
             padding: 1rem 2rem;
             align-items: center;
             border-bottom: 1px solid #444;
         }
+
         header h1 {
             font-size: 2rem;
             margin: 0;
             font-weight: 600;
         }
+
         header .logo {
             font-size: 1.8rem;
             font-weight: 600;
         }
+
         header nav {
             display: flex;
             gap: 1.5rem;
         }
+
         header nav a {
             text-decoration: none;
             color: #e0e0e0;
@@ -48,65 +65,93 @@
             font-weight: 500;
             transition: color 0.3s;
         }
+
         header nav a:hover {
-            color: #f39c12; /* Hover effect */
+            color: #f39c12;
         }
+
         header nav a.active {
-            color: #f39c12; /* Highlight active link */
+            color: #f39c12;
         }
+
         .container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Center the cards */
+            justify-content: center;
+            align-items: center;
             padding: 2rem;
             gap: 2rem;
             overflow-y: auto;
             margin-top: 2rem;
+            flex-grow: 1;
         }
+
         .section {
-            background: #2a2a2a; /* Dark card background */
+            background: #2a2a2a;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 1.5rem; /* Reduced padding */
-            width: 250px; /* Reduced width */
+            padding: 1.5rem;
+            width: 250px;
             text-align: center;
             transition: box-shadow 0.3s, transform 0.3s;
             cursor: pointer;
             color: inherit;
             text-decoration: none;
+            margin: 1rem;
         }
+
         .section:hover {
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             transform: translateY(-5px);
         }
+
         .section h2 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 500;
         }
+
         .content {
-            background-color: #333333; /* Slightly lighter for contrast */
+            background-color: #333333;
             padding: 1rem;
             border-radius: 8px;
-            font-size: 1.1rem; /* Reduced font size */
+            font-size: 1.1rem;
             color: #e0e0e0;
             text-align: center;
         }
+
         .footer {
             text-align: center;
             padding: 1rem;
-            background-color: #1e1e1e;
+            background-color: rgba(31, 31, 31, 0.8);
             color: #777;
             border-top: 1px solid #444;
+            margin-top: auto;
         }
+
         .footer p {
             font-size: 1rem;
             margin: 0;
             font-weight: 400;
         }
+
         .section .icon {
-            font-size: 3rem; /* Larger icon */
+            font-size: 3rem;
             margin-bottom: 1rem;
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            margin-left: 0.5rem;
+            display: inline-block;
+        }
+
+        .up {
+            color: #28a745;
+        }
+
+        .down {
+            color: #dc3545;
         }
 
         @media (max-width: 768px) {
@@ -140,42 +185,42 @@
     <nav>
         <a href="index.html" class="active">Traffic</a>
         <a href="electricity.html">Electricity</a>
-        <a href="water consumption.html">Water</a>
-        <a href="waste management.html">Waste</a>
+        <a href="water.html">Water</a>
+        <a href="waste.html">Waste</a>
     </nav>
 </header>
 
 <div class="container">
-    <!-- Clickable Traffic Monitoring Card -->
+    <!-- Traffic Monitoring Card -->
     <a href="index.html" class="section">
-        <div class="icon"><i class="fas fa-road"></i></div> <!-- Traffic icon -->
+        <div class="icon"><i class="fas fa-road"></i></div>
         <h2>Traffic Monitoring</h2>
         <div class="content">
             <p id="trafficPercentage">Loading...</p>
         </div>
     </a>
 
-    <!-- Clickable Electricity Consumption Card -->
+    <!-- Electricity Consumption Card -->
     <a href="electricity.html" class="section">
-        <div class="icon"><i class="fas fa-bolt"></i></div> <!-- Electricity icon -->
+        <div class="icon"><i class="fas fa-bolt"></i></div>
         <h2>Electricity Consumed</h2>
         <div class="content">
-            <p>Electricity consumption data will appear here.</p>
+            <p id="electricityPercentage">Loading...</p>
         </div>
     </a>
 
-    <!-- Clickable Water Consumption Card -->
-    <a href="water consumption.html" class="section">
-        <div class="icon"><i class="fas fa-tint"></i></div> <!-- Water icon -->
+    <!-- Water Consumption Card -->
+    <a href="water.html" class="section">
+        <div class="icon"><i class="fas fa-tint"></i></div>
         <h2>Water Consumption</h2>
         <div class="content">
             <p>Water consumption data will appear here.</p>
         </div>
     </a>
 
-    <!-- Clickable Waste Management Card -->
-    <a href="waste management.html" class="section">
-        <div class="icon"><i class="fas fa-trash"></i></div> <!-- Waste Management icon -->
+    <!-- Waste Management Card -->
+    <a href="waste.html" class="section">
+        <div class="icon"><i class="fas fa-trash"></i></div>
         <h2>Waste Management</h2>
         <div class="content">
             <p>Waste management data will appear here.</p>
@@ -188,12 +233,17 @@
 </footer>
 
 <script>
-// Initialize traffic data dynamically
+// Simulate traffic data
 let trafficData = [];
+let previousTrafficPercentage = 0;
 
-// Function to fetch traffic data from the JSON file
+// Simulate electricity data
+let electricityData = [];
+let previousElectricityPercentage = 0;
+
+// Fetch traffic data
 function fetchTrafficData() {
-    return fetch('data/traffic-data.json')  // Ensure the path is correct for your data file
+    return fetch('data/traffic-data.json')
         .then(response => response.json())
         .catch(error => {
             console.error("Error fetching traffic data:", error);
@@ -201,43 +251,98 @@ function fetchTrafficData() {
         });
 }
 
-// Function to calculate the average traffic percentage
+// Fetch electricity data
+function fetchElectricityData() {
+    return fetch('data/electricity-data.json')
+        .then(response => response.json())
+        .catch(error => {
+            console.error("Error fetching electricity data:", error);
+            return [];
+        });
+}
+
+// Calculate total traffic percentage
 function calculateTotalTrafficPercentage() {
     if (trafficData.length === 0) return 0;
 
     const totalTraffic = trafficData.reduce((sum, location) => sum + location.trafficLevel, 0);
-    return (totalTraffic / trafficData.length).toFixed(2); // Return the average
+    return (totalTraffic / trafficData.length).toFixed(2);
 }
 
-// Function to update the total traffic percentage
+// Calculate total electricity percentage
+function calculateTotalElectricityPercentage() {
+    if (electricityData.length === 0) return 0;
+
+    const totalElectricity = electricityData.reduce((sum, building) => sum + building.electricityUsage, 0);
+    return (totalElectricity / electricityData.length).toFixed(2);
+}
+
+// Update traffic percentage and show arrow
 function updateTrafficPercentage() {
     const trafficPercentageElement = document.getElementById('trafficPercentage');
     const averageTraffic = calculateTotalTrafficPercentage();
-    trafficPercentageElement.textContent = `Total Traffic: ${averageTraffic}%`; // Display the average
+    
+    const trafficChange = averageTraffic - previousTrafficPercentage;
+    let arrowClass = '';
+    if (trafficChange > 0) {
+        arrowClass = 'up';
+    } else if (trafficChange < 0) {
+        arrowClass = 'down';
+    }
+
+    trafficPercentageElement.innerHTML = `Total Traffic: ${averageTraffic}% <span class="arrow ${arrowClass}">${trafficChange > 0 ? '↑' : trafficChange < 0 ? '↓' : ''}</span>`;
+    previousTrafficPercentage = averageTraffic;
 }
 
-// Function to simulate dynamic traffic level updates
-function startDynamicTrafficSimulation() {
+// Update electricity percentage and show arrow
+function updateElectricityPercentage() {
+    const electricityPercentageElement = document.getElementById('electricityPercentage');
+    const averageElectricity = calculateTotalElectricityPercentage();
+    
+    const electricityChange = averageElectricity - previousElectricityPercentage;
+    let arrowClass = '';
+    if (electricityChange > 0) {
+        arrowClass = 'up';
+    } else if (electricityChange < 0) {
+        arrowClass = 'down';
+    }
+
+    electricityPercentageElement.innerHTML = `Total Consumption: ${averageElectricity}% <span class="arrow ${arrowClass}">${electricityChange > 0 ? '↑' : electricityChange < 0 ? '↓' : ''}</span>`;
+    previousElectricityPercentage = averageElectricity;
+}
+
+// Simulate data updates for traffic and electricity
+function startDynamicDataSimulation() {
     setInterval(() => {
-        trafficData.forEach((location, index) => {
-            // Simulate random traffic level changes between -10% and +10%
+        trafficData.forEach(location => {
             let randomChange = Math.floor(Math.random() * 21) - 10;
             location.trafficLevel = Math.max(0, Math.min(100, location.trafficLevel + randomChange));
-
-            // Update the total traffic percentage every time data changes
-            updateTrafficPercentage();
         });
-    }, 5000); // Update every 5 seconds
+        updateTrafficPercentage();
+
+        electricityData.forEach(building => {
+            let randomChange = Math.floor(Math.random() * 5) - 2;
+            building.electricityUsage = Math.max(0, Math.min(100, building.electricityUsage + randomChange));
+        });
+        updateElectricityPercentage();
+    }, 5000);
 }
 
-// Fetch traffic data and start simulation
+// Fetch and simulate data for both traffic and electricity
 fetchTrafficData()
     .then(data => {
-        trafficData = data; // Store the fetched traffic data
-        updateTrafficPercentage();  // Initial display
-        startDynamicTrafficSimulation();  // Start dynamic updates
+        trafficData = data;
+        updateTrafficPercentage();
+        startDynamicDataSimulation();
     })
     .catch(error => console.error('Error loading traffic data:', error));
+
+fetchElectricityData()
+    .then(data => {
+        electricityData = data;
+        updateElectricityPercentage();
+    })
+    .catch(error => console.error('Error loading electricity data:', error));
 </script>
 
 </body>

@@ -1,0 +1,8 @@
+[
+    { "time": "08:00 AM", "consumption": 1000 },
+    { "time": "12:00 PM", "consumption": 1200 },
+    { "time": "06:00 PM", "consumption": 1100 },
+    { "time": "08:00 AM", "consumption": 400 },
+    { "time": "12:00 PM", "consumption": 500 },
+    { "time": "06:00 PM", "consumption": 450 }
+]

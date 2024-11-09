@@ -1,0 +1,42 @@
+[
+    {
+        "time": 1,
+        "waste": 150
+    },
+    {
+        "time": 2,
+        "waste": 145
+    },
+    {
+        "time": 3,
+        "waste": 160
+    },
+    {
+        "time": 4,
+        "waste": 155
+    },
+    {
+        "time": 5,
+        "waste": 170
+    },
+    {
+        "time": 6,
+        "waste": 165
+    },
+    {
+        "time": 7,
+        "waste": 180
+    },
+    {
+        "time": 8,
+        "waste": 175
+    },
+    {
+        "time": 9,
+        "waste": 190
+    },
+    {
+        "time": 10,
+        "waste": 200
+    }
+]
